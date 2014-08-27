@@ -32,6 +32,8 @@ function [hdr, data] = readNervusData(filename, startIndex, lData, channels)
   narginchk(1,4);
   nargoutchk(1, 2);
   
+  BYTESPERVALUE = 2;
+  
   switch nargin
     case 1
       assert(nargout ==1, 'Incorrect number of output arguments.');
@@ -280,7 +282,7 @@ function [hdr, data] = readNervusData(filename, startIndex, lData, channels)
 
     fseek(h, dataStart,'bof');
 
-    startOffset = (startIndex-1) * hdr.nrTraces;
+    startOffset = (startIndex-1) * hdr.nrTraces * BYTESPERVALUE;
     if startOffset > 0
       fseek(h, startOffset, 'cof');
     end
